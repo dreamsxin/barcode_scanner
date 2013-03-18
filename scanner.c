@@ -15,9 +15,9 @@ extern struct exploded * exploded_ptr;
 
 extern char line[100];
 
-int insert_upc_pantry();
-int insert_upc_freezer();
-int insert_upc_fridge();
+int insert_upc_pantry(struct barcode_information *barcode_info_p);
+int insert_upc_freezer(struct barcode_information *barcode_info_p);
+int insert_upc_fridge(struct barcode_information *barcode_info_p);
 
 void clrscr(); // clears terminal screen
 
@@ -37,6 +37,7 @@ int main(void)
 	printf("Welcome to the Recipe Management Barcode Scanner shiznit\n");
 	printf("Please select what you would like to do:\n");
 
+	struct barcode_information *barcode_info_p = malloc(sizeof(struct barcode_information));
 
 	while(1) // continually ask user for activity 
 	{
@@ -44,15 +45,15 @@ int main(void)
 		int choice = parse_user_input_activity(); // take user input, and convert to int
 		switch(choice){
 			case 1:
-				insert_upc_pantry();
+				insert_upc_pantry(barcode_info_p);
 			break;
 
 			case 2:
-				insert_upc_freezer();
+				insert_upc_freezer(barcode_info_p);
 			break; 
 
 			case 3:
-				insert_upc_fridge();
+				insert_upc_fridge(barcode_info_p);
 			break;
 
 			default:
@@ -68,13 +69,13 @@ int main(void)
 }
 
 
-int insert_upc_freezer()
+int insert_upc_freezer(struct barcode_information *barcode_info_p)
 {
 	// keep asking for barcodes
 	while(ask_for_barcode() == 0){
 
 		//allocate memory for struct
-		struct barcode_information *barcode_info_p = malloc(sizeof(struct barcode_information));
+		//struct barcode_information *barcode_info_p = malloc(sizeof(struct barcode_information));
 	
 		barcode_info_p->status = 0; // initialize status
 
@@ -101,19 +102,19 @@ int insert_upc_freezer()
 
 		print_struct_barcode(barcode_info_p);
 
-		free(barcode_info_p); // free allocated memory
+		//free(barcode_info_p); // free allocated memory
 
 		memset(line, 0, sizeof(line));
 	}
 }
 
-int insert_upc_fridge()
+int insert_upc_fridge(struct barcode_information *barcode_info_p)
 {
 	// keep asking for barcodes
 	while(ask_for_barcode() == 0){
 
 		//allocate memory for struct
-		struct barcode_information *barcode_info_p = malloc(sizeof(struct barcode_information));
+		//struct barcode_information *barcode_info_p = malloc(sizeof(struct barcode_information));
 	
 		barcode_info_p->status = 0; // initialize status
 
@@ -140,7 +141,7 @@ int insert_upc_fridge()
 
 		print_struct_barcode(barcode_info_p);
 
-		free(barcode_info_p); // free allocated memory
+		//free(barcode_info_p); // free allocated memory
 
 		memset(line, 0, sizeof(line));
 	}
@@ -148,13 +149,13 @@ int insert_upc_fridge()
 
 
 
-int insert_upc_pantry()
+int insert_upc_pantry(struct barcode_information *barcode_info_p)
 {
 	// keep asking for barcodes
 	while(ask_for_barcode() == 0){
 
 		//allocate memory for struct
-		struct barcode_information *barcode_info_p = malloc(sizeof(struct barcode_information));
+		//struct barcode_information *barcode_info_p = malloc(sizeof(struct barcode_information));
 	
 		barcode_info_p->status = 0; // initialize status
 
@@ -185,7 +186,7 @@ int insert_upc_pantry()
 
 		print_struct_barcode(barcode_info_p);
 
-		free(barcode_info_p); // free allocated memory
+		//free(barcode_info_p); // free allocated memory
 
 		memset(line, 0, sizeof(line));
 	}
