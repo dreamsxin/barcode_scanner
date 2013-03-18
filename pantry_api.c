@@ -7,7 +7,7 @@
 	#include "scanner_helper.h"
 	#include "api_urls.h"
 
-
+	//save urls
 	
 
 	char complete_url[1000]; // char string for complete url when requesting URL data
