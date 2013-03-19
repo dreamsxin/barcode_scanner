@@ -62,8 +62,10 @@
 		strcat(complete_url, apib_scan_barcode); // api func call
 		strcat(complete_url, barcode); // api parameter
 		printf("check_barcode_exists complete url: %s\n", complete_url);
-		char * barcode_info = getURLData(complete_url);
-		return barcode_info;
+		//char * barcode_info = getURLData(complete_url);
+		return getURLData(complete_url);
+		
+		//return barcode_info;
 	}
 
 
@@ -185,80 +187,64 @@
 	// download html source from supplied url
 	char * getURLData(char *url){
 		CURL *curl;
+		CURL *curl_handle;
 		CURLcode res;
 
+		struct MemoryStruct chunk;
 
-	  	struct MemoryStruct chunk;
-
-	  	chunk.memory = malloc(1);  /* will be grown as needed by the realloc above */ 
-	  	chunk.size = 0;    /* no data at this point */ 
+		chunk.memory = malloc(1);  /* will be grown as needed by the realloc above */ 
+		chunk.size = 0;    /* no data at this point */ 
 
 		curl_global_init(CURL_GLOBAL_ALL);
 
 		/* init the curl session */ 
-	 	curl = curl_easy_init();
+		curl_handle = curl_easy_init();
 
-		curl_easy_setopt(curl, CURLOPT_URL, url);//"http://rontonsoup.com/recipe_management/index.php/api/checkPiidExistsInFridge/3");
-		curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,WriteMemoryCallback);
+		/* specify URL to get */ 
+		curl_easy_setopt(curl_handle, CURLOPT_URL, "http://www.example.com/");
 
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
+		/* send all data to this function  */ 
+		curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 
-		curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+		/* we pass our 'chunk' struct to the callback function */ 
+		curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
 
-		res = curl_easy_perform(curl);
+		/* some servers don't like requests that are made without a user-agent
+		 field, so we provide one */ 
+		curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+
+		/* get it! */ 
+		res = curl_easy_perform(curl_handle);
+
+		/* check for errors */ 
 		if(res != CURLE_OK) {
-		    fprintf(stderr, "curl_easy_perform() failed: %s\n",
-		            curl_easy_strerror(res));
-		  }
-		  else {
-		    /*
-		     * Now, our chunk.memory points to a memory block that is chunk.size
-		     * bytes big and contains the remote file.
-		     *
-		     * Do something nice with it!
-		     *
-		     * You should be aware of the fact that at this point we might have an
-		     * allocated data block, and nothing has yet deallocated that data. So when
-		     * you're done with it, you should free() it as a nice application.
-		     */ 
-		 
-		    printf("%lu bytes retrieved\n", (long)chunk.size);
-		  }
+			fprintf(stderr, "curl_easy_perform() failed: %s\n",
+		        curl_easy_strerror(res));
+		} else {
+			/*
+			 * Now, our chunk.memory points to a memory block that is chunk.size
+			 * bytes big and contains the remote file.
+			 *
+			 * Do something nice with it!
+			 *
+			 * You should be aware of the fact that at this point we might have an
+			 * allocated data block, and nothing has yet deallocated that data. So when
+			 * you're done with it, you should free() it as a nice application.
+			 */ 
+
+			printf("%lu bytes retrieved\n", (long)chunk.size);
+		}
 
 		/* cleanup curl stuff */ 
-			curl_easy_cleanup(curl);
+		curl_easy_cleanup(curl_handle);
 
-			//printf("%lu bytes retrieved\n", (long)chunk.size);
-			//printf("%s string retrieved\n", chunk.memory);
-
+		if(chunk.memory)
+			free(chunk.memory);
 
 		/* we're done with libcurl, so clean it up */ 
 		curl_global_cleanup();
-
-		return chunk.memory;
-	}
-	
-	char * getURLData2(char * url)
-	{
-		CURL *curl;
-		CURLcode res;
-
-		curl = curl_easy_init();
-		if(curl) {
-		curl_easy_setopt(curl, CURLOPT_URL, "http://example.com");
-		/* example.com is redirected, so we tell libcurl to follow redirection */ 
-		curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-
-		/* Perform the request, res will get the return code */ 
-		res = curl_easy_perform(curl);
-		/* Check for errors */ 
-		if(res != CURLE_OK)
-		  fprintf(stderr, "curl_easy_perform() failed: %s\n",
-		          curl_easy_strerror(res));
-
-		/* always cleanup */ 
-		curl_easy_cleanup(curl);
-		}
+		
+		return "Ture?";
 	}
 
 	static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)

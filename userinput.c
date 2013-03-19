@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "userinput.h"
 #include "c_helper.h"
 
@@ -12,7 +13,9 @@ int ask_for_barcode(){
 	if(line[strlen(line) - 1] == '\n')
 		line[strlen(line) - 1] = 0; // remove new line
 
-	strncpy(line, str_replace(" ", "%20", line), sizeof(line) - 1); // turn spaces into encoded, %20
+	//char * replaced = str_replace(" ", "%20", line);
+	//strncpy(line, replaced, sizeof(line) - 1); // turn spaces into encoded, %20
+	//free(replaced); // free memory allocated from str_replace
 
 	if(strcmp(line, "exit") == 0){
 		return -1; // user wants out of loop
