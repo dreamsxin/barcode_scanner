@@ -96,8 +96,7 @@ int test_scan_results(struct barcode_information * barcode_info_p, struct explod
 	char * status;
 	if(head->next != 0) {
 		status = head->string;
-	}
-	else {
+	} else {
 		printf("nothing in head\n");
 		return 0; // nothing in head
 	}
@@ -109,6 +108,12 @@ int test_scan_results(struct barcode_information * barcode_info_p, struct explod
 	}
 
 	head = head->next; // next head, should be upcid
+
+	if(stringToBool(head->string) != -1) // verify head[1]->string != TRUE || FALSE
+	{
+		printf("head[1] == TRUE || head[1] == FALSE\n");
+		return 0;
+	}
 
 	strncpy(barcode_info_p->upcid, head->string, sizeof(barcode_info_p->upcid) - 1); // save upcid
 
