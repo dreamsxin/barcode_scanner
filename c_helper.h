@@ -25,7 +25,7 @@ struct exploded * explode(char * string, char * delimeter); // explodes string i
 
 struct exploded * exploded_add_node(struct exploded * exploded_ptr, char * string); // assists explode(), adds string to exploded_ptr and returns next node in exploded_ptr
 
-void freeExploded(struct exploded * head);
+void free_exploded(struct exploded * head);
 
 int stringToBool(char * string); // true == 1, false == 0, neither == -1
 

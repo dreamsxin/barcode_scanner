@@ -12,6 +12,25 @@
 
 	char complete_url[1000]; // char string for complete url when requesting URL data
 
+	// urls that don't matter if they'er here or not
+	// don't have to be in api_urls.h (.gitignore file)
+	const char * apib_insert_update_freezer_from_upcid = "";
+	const char * apib_insert_update_fridge_from_upcpid = "";
+	const char * apib_insert_update_pantry_from_upcpid = "";
+
+	const char * apib_scan_barcode = "scanBarcode/";
+	const char * apib_get_iid_from_upcid = "";
+	const char * apib_get_piid_from_iid = "";
+	const char * apib_get_iid_information = "";
+	const char * apib_get_upcid_information = "";
+	const char * apib_get_qtid_from_iid = "";
+	const char * apib_get_qtid_from_qtype = "";
+	const char * apib_get_qtypes = "";
+
+	const char * apib_move_upc_location = "";
+	const char * apib_increase_upc_location = "";
+	const char * apib_decrease_upc_location = "";
+
 
 
 //INSERTS
@@ -47,7 +66,6 @@
 		strcat(complete_url, apib_insert_update_pantry_from_upcpid); // api func call
 		strcat(complete_url, upcid); // api parameter
 		printf("insert_update_pantry_from_upcid url: %s\n", complete_url);
-		return "pantry";
 		char * piid = getURLData(complete_url);
 		return piid;
 	}
@@ -62,10 +80,8 @@
 		strcat(complete_url, apib_scan_barcode); // api func call
 		strcat(complete_url, barcode); // api parameter
 		printf("check_barcode_exists complete url: %s\n", complete_url);
-		//char * barcode_info = getURLData(complete_url);
-		return getURLData(complete_url);
-		
-		//return barcode_info;
+		char * scan_results = getURLData(complete_url);
+		return scan_results;
 	}
 
 
@@ -186,7 +202,6 @@
 
 	// download html source from supplied url
 	char * getURLData(char *url){
-		CURL *curl;
 		CURL *curl_handle;
 		CURLcode res;
 
@@ -201,7 +216,7 @@
 		curl_handle = curl_easy_init();
 
 		/* specify URL to get */ 
-		curl_easy_setopt(curl_handle, CURLOPT_URL, "http://www.example.com/");
+		curl_easy_setopt(curl_handle, CURLOPT_URL, url);
 
 		/* send all data to this function  */ 
 		curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
@@ -219,8 +234,9 @@
 		/* check for errors */ 
 		if(res != CURLE_OK) {
 			fprintf(stderr, "curl_easy_perform() failed: %s\n",
-		        curl_easy_strerror(res));
-		} else {
+	       		curl_easy_strerror(res));
+		}
+		else {
 			/*
 			 * Now, our chunk.memory points to a memory block that is chunk.size
 			 * bytes big and contains the remote file.
@@ -238,13 +254,13 @@
 		/* cleanup curl stuff */ 
 		curl_easy_cleanup(curl_handle);
 
-		if(chunk.memory)
-			free(chunk.memory);
-
 		/* we're done with libcurl, so clean it up */ 
 		curl_global_cleanup();
-		
-		return "Ture?";
+
+		if(chunk.size == 0)
+			return NULL; // return NULL if url request returns nothing
+		else
+			return chunk.memory;
 	}
 
 	static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)

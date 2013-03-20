@@ -101,7 +101,7 @@ struct exploded * exploded_add_node(struct exploded * exploded_ptr, char * strin
 }
 
 // frees all the nodes in exploded
-void freeExploded(struct exploded * head)
+void free_exploded(struct exploded * head)
 {
 	struct exploded * tmp;
 	while(head != NULL)
