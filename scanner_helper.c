@@ -111,7 +111,7 @@ int test_scan_results(struct barcode_information * barcode_info_p, struct explod
 
 	if(stringToBool(head->string) != -1) // verify head[1]->string != TRUE || FALSE
 	{
-		printf("head[1] == TRUE || head[1] == FALSE\n");
+		printf("head[1] == TRUE || head[1] == FALSE, head[1] should be a barcode\n");
 		return 0;
 	}
 
