@@ -1,4 +1,3 @@
-//ssh test
-This is a readme
+This is a program I'm developing that integrates with my web server to populate a database with scanned barcodes that reflects what exists in my pantry.
 
-More changes to readme
+In the end, this, combined with the recipe site, will allow me to keep track of what's in my pantry/fridge/freezer, as well as know what kind of food waste I incur and what recipes I'm able to make with food on hand.
