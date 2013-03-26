@@ -137,24 +137,28 @@ int insert_upc_freezer(struct barcode_information *barcode_info_p)
 	// keep asking for barcodes
 	while(ask_for_barcode() == 0){
 
-		//allocate memory for struct
-		struct barcode_information *barcode_info_p = malloc(sizeof(struct barcode_information));
+		memset(barcode_info_p, 0, sizeof(struct barcode_information)); // set barcode_info_p to all 0's to remove any phantom data in memory
 	
 		barcode_info_p->status = 0; // initialize status
 
 		strncpy(barcode_info_p->upc, line, sizeof(barcode_info_p->upc) - 1); // save barcode into struct
 
-		char * results  = scan_barcode(barcode_info_p->upc);
-		printf("Results: \n %s\n", results);
+		char * scan_results = scan_barcode(barcode_info_p->upc); // call website with upc
+		if(scan_results == NULL)
+			printf("reuslts failed\n");
+		else
+			printf("results: %s\n", scan_results);
 
-		struct exploded * resultsE = explode(results, "\n"); // split results from new line character
+		struct exploded * resultsE = explode(scan_results, "\n"); // split results from new line character
 		print_exploded(resultsE);
 
-		if(test_scan_results(barcode_info_p, resultsE) == 0){
+		if(test_scan_results(barcode_info_p, resultsE) == 0) // verify result is TRUE and upcid exists
+		{
 			printf("Scan Failed, barcode not found\n");
 			continue; // go to next scan request
-		}
-		printf("scan passed, barcode found\n");	
+		} else {
+			printf("scan passed, barcode found\n");	
+		}	
 
 		char * insert_results = insert_update_freezer_from_upcid(barcode_info_p->upcid);
 
@@ -162,10 +166,14 @@ int insert_upc_freezer(struct barcode_information *barcode_info_p)
 			printf("Scan Failed on insert\n");
 			continue;
 		}
+		else
+			printf("insert results: %s\n", insert_results);
+
+		free(insert_results); // free allocated memory from cURL call
 
 		print_struct_barcode(barcode_info_p);
 
-		free(barcode_info_p); // free allocated memory
+		free_exploded(resultsE); // free allocated memory from explode() function
 
 		memset(line, 0, sizeof(line));
 	}
@@ -178,24 +186,28 @@ int insert_upc_fridge(struct barcode_information *barcode_info_p)
 	// keep asking for barcodes
 	while(ask_for_barcode() == 0){
 
-		//allocate memory for struct
-		struct barcode_information *barcode_info_p = malloc(sizeof(struct barcode_information));
+		memset(barcode_info_p, 0, sizeof(struct barcode_information)); // set barcode_info_p to all 0's to remove any phantom data in memory
 	
 		barcode_info_p->status = 0; // initialize status
 
 		strncpy(barcode_info_p->upc, line, sizeof(barcode_info_p->upc) - 1); // save barcode into struct
 
-		char * results  = scan_barcode(barcode_info_p->upc);
-		printf("Results: \n %s\n", results);
+		char * scan_results = scan_barcode(barcode_info_p->upc); // call website with upc
+		if(scan_results == NULL)
+			printf("reuslts failed\n");
+		else
+			printf("results: %s\n", scan_results);
 
-		struct exploded * resultsE = explode(results, "\n"); // split results from new line character
+		struct exploded * resultsE = explode(scan_results, "\n"); // split results from new line character
 		print_exploded(resultsE);
 
-		if(test_scan_results(barcode_info_p, resultsE) == 0){
+		if(test_scan_results(barcode_info_p, resultsE) == 0) // verify result is TRUE and upcid exists
+		{
 			printf("Scan Failed, barcode not found\n");
 			continue; // go to next scan request
-		}
-		printf("scan passed, barcode found\n");	
+		} else {
+			printf("scan passed, barcode found\n");	
+		}	
 
 		char * insert_results = insert_update_fridge_from_upcid(barcode_info_p->upcid);
 
@@ -203,10 +215,14 @@ int insert_upc_fridge(struct barcode_information *barcode_info_p)
 			printf("Scan Failed on insert\n");
 			continue;
 		}
+		else
+			printf("insert results: %s\n", insert_results);
+
+		free(insert_results); // free allocated memory from cURL call
 
 		print_struct_barcode(barcode_info_p);
 
-		free(barcode_info_p); // free allocated memory
+		free_exploded(resultsE); // free allocated memory from explode() function
 
 		memset(line, 0, sizeof(line));
 	}
