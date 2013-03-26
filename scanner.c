@@ -26,9 +26,6 @@ void clrscr(); // clears terminal screen
 //void saveResultsToStruct(struct barcode_information * barcode_info_p, struct exploded * head);
 
 
-
-
-
 int main(void)
 {
 	clrscr(); // clear screen
@@ -112,8 +109,6 @@ int insert_upc_pantry(struct barcode_information *barcode_info_p)
 		} else {
 			printf("scan passed, barcode found\n");	
 		}
-
-		
 
 		char * insert_results = insert_update_pantry_from_upcid(barcode_info_p->upcid);
 		//char * insert_results = "piid";

@@ -14,22 +14,23 @@
 
 	// urls that don't matter if they'er here or not
 	// don't have to be in api_urls.h (.gitignore file)
-	const char * apib_insert_update_freezer_from_upcid = "";
-	const char * apib_insert_update_fridge_from_upcpid = "";
-	const char * apib_insert_update_pantry_from_upcpid = "";
+	const char * apib_insert_update_freezer_from_upcid = "insertUpdateFreezerFromUpcid/";
+	const char * apib_insert_update_fridge_from_upcpid = "insertUpdateFridgeFromUpcid/";
+	const char * apib_insert_update_pantry_from_upcpid = "insertUpdatePantryFromUpcid/";
 
 	const char * apib_scan_barcode = "scanBarcode/";
-	const char * apib_get_iid_from_upcid = "";
-	const char * apib_get_piid_from_iid = "";
-	const char * apib_get_iid_information = "";
-	const char * apib_get_upcid_information = "";
-	const char * apib_get_qtid_from_iid = "";
-	const char * apib_get_qtid_from_qtype = "";
-	const char * apib_get_qtypes = "";
+	const char * apib_get_iid_from_upcid = "getIidFromUpcid/";
+	const char * apib_get_piid_from_iid = "getPiidFromIid/";
+	const char * apib_get_iid_information = "getIidInformation/";
+	const char * apib_get_upcid_information = "getUpcidInformatino/";
+	const char * apib_get_qtid_from_iid = "getQtidFromIid/";
+	const char * apib_get_qtid_from_upcid = "getQtidFromUpcid/";
+	const char * apib_get_qtid_from_qtype = "getQtidFromQtype/";
+	const char * apib_get_qtypes = "getDefaultQtids/";
 
-	const char * apib_move_upc_location = "";
-	const char * apib_increase_upc_location = "";
-	const char * apib_decrease_upc_location = "";
+	const char * apib_move_upc_location = "moveUpcLocation/";
+	const char * apib_increase_upc_location = "increaseUpcLocation/";
+	const char * apib_decrease_upc_location = "decreaseUpcLocation/";
 
 
 
