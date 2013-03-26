@@ -43,10 +43,8 @@
 		strcat(complete_url, apib_insert_update_freezer_from_upcid); // api func call
 		strcat(complete_url, upcid); // api parameter
 		printf("insert_update_freezer_from_upcid url: %s\n", complete_url);
-
-		//char * piid = getURLData(complete_url);
-		//return piid;
-		return "piid";
+		char * piid = getURLData(complete_url);
+		return piid;
 	}
 
 	char * insert_update_fridge_from_upcid(char upcid[100])
@@ -55,8 +53,6 @@
 		strcat(complete_url, apib_insert_update_fridge_from_upcpid); // api func call
 		strcat(complete_url, upcid); // api parameter
 		printf("insert_update_fridge_from_upcid url: %s\n", complete_url);
-		return "fridge";
-
 		char * piid = getURLData(complete_url);
 		return piid;
 	}

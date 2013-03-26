@@ -111,7 +111,6 @@ int insert_upc_pantry(struct barcode_information *barcode_info_p)
 		}
 
 		char * insert_results = insert_update_pantry_from_upcid(barcode_info_p->upcid);
-		//char * insert_results = "piid";
 
 		if(stringToBool(insert_results) != -1){
 			printf("Scan Failed on insert\n");
