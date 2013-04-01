@@ -158,7 +158,7 @@ int insert_upc_freezer(struct barcode_information *barcode_info_p)
 			continue; // go to next scan request
 		} else {
 			printf("scan passed, barcode found\n");	
-		}	
+		}
 
 		char * insert_results = insert_update_freezer_from_upcid(barcode_info_p->upcid);
 

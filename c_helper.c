@@ -114,6 +114,9 @@ void free_exploded(struct exploded * head)
 
 // returns 1 if string == true, 0 if not
 int stringToBool(char * string){
+	if(string == NULL)
+		return -1;
+	
 	if(strcasecmp(string, "true") == 0)
 		return 1;
 
