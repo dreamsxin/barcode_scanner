@@ -70,7 +70,7 @@
 //GETTERS
 
 
-	char * scan_barcode(char * barcode)
+	char * api_scan_barcode(char * barcode)
 	{
 		// make url
 		strcpy(complete_url, url_api_barcode); // root url

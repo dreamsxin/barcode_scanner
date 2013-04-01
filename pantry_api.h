@@ -80,7 +80,7 @@ char * insert_update_pantry_from_upcid(char upcid[100]);
  * Note: 
  *
 */
-char * scan_barcode(char barcode[100]); // calls api to lookup supplied barcode
+char * api_scan_barcode(char barcode[100]); // calls api to lookup supplied barcode
 
 
 

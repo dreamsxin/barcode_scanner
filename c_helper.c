@@ -37,6 +37,27 @@ char * substr(char * string, int start, int end){
 	return newString; // return
 }
 
+// return sub string of string from index(int) start to index(char) end
+char * substr_char(char * string, int start, char end)
+{
+	if(start >= (strlen(string) - 1))
+		return NULL; // out of bounds
+
+	char * end_loc = string + start; // new pointer to beginning of string + start offset
+	int end_i = strlen(string) - 1; // initialize end location to end of string
+
+	while((end_loc = strchr(end_loc, end))!= NULL)// search for char 'end' in string 'string'
+	{
+		if(end_loc >= (string + start)) // should always be the case because of end_loc declaration
+		{
+			end_i = (end_loc - string - 1); // -1 to compensate for found char
+			break; // we reached character after start posotion
+		}
+	}
+
+	return substr(string, start, end_i); // return substring
+}
+
 
 int numChar(char * string, char needle){
 
